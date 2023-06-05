@@ -1,0 +1,54 @@
+site_name: json-explorer
+repo_url: https://github.com/stringertheory/json-explorer
+site_url: https://stringertheory.github.io/json-explorer
+site_description: Explore the structure of a bunch of jsons
+site_author: Mike Stringer
+edit_uri: edit/main/docs/
+repo_name: stringertheory/json-explorer
+copyright: Maintained by <a href="https://stringertheory.com">Florian</a>.
+
+nav:
+  - Home: index.md
+  - Modules: modules.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+            setup_commands:
+                - import sys
+                - sys.path.append('../')
+theme:
+  name: material
+  feature:
+    tabs: true
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/stringertheory/json-explorer
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/json-explorer
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
