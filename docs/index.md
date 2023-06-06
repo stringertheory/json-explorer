@@ -5,4 +5,4 @@
 [![Commit activity](https://img.shields.io/github/commit-activity/m/stringertheory/json-explorer)](https://img.shields.io/github/commit-activity/m/stringertheory/json-explorer)
 [![License](https://img.shields.io/github/license/stringertheory/json-explorer)](https://img.shields.io/github/license/stringertheory/json-explorer)
 
-Explore the structure of a bunch of jsons
+Explore the structure of a bunch of jsons.
