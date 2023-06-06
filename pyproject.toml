@@ -20,7 +20,6 @@ python = ">=3.8,<4.0"
 pytest = "^7.2.0"
 pytest-cov = "^4.0.0"
 deptry = "^0.6.4"
-mypy = "^0.981"
 pre-commit = "^2.20.0"
 tox = "^3.25.1"
 beautifulsoup4 = "^4.12.2"
@@ -38,16 +37,6 @@ build-backend = "poetry.core.masonry.api"
 line-length = 120
 target-version = ['py37']
 preview = true
-
-[tool.mypy]
-files = ["json_explorer"]
-disallow_untyped_defs = "True"
-disallow_any_unimported = "True"
-no_implicit_optional = "True"
-check_untyped_defs = "True"
-warn_return_any = "True"
-warn_unused_ignores = "True"
-show_error_codes = "True"
 
 [tool.ruff]
 target-version = "py37"
