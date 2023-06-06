@@ -1,8 +1,6 @@
 import collections
 import html
-import json
 import pathlib
-import sys
 
 INDEX = object()
 INDEX_STRING = "[*]"
@@ -29,13 +27,6 @@ def oxford_join(items, pluralize=False):
     if len(items) == 2:
         return " or ".join(items)
     return "{}, or {}".format(", ".join(items[:-1]), items[-1])
-
-
-def format_type(value, pluralize=False):
-    if isinstance(value, str):
-        return f"{value}{'s' if pluralize else ''}"
-    else:
-        return oxford_join(value, pluralize=pluralize)
 
 
 class TripleCounter(dict):
@@ -88,6 +79,13 @@ class TripleCounter(dict):
         for keys in iter_object(d, []):
             self.increment(keys, 1)
 
+    @classmethod
+    def from_objects(cls, objects):
+        counter = cls()
+        for obj in objects:
+            counter.add_object(obj)
+        return counter
+
     def html(self):
         with open(TEMPLATE_FILENAME) as infile:
             html = infile.read()
@@ -136,17 +134,6 @@ class Node(dict):
         self.path = path
         self.parent = {}
         self.children = []
-
-    def set_parent(self, parent_node):
-        self.parent = parent_node
-
-    def add_child(self, child_node):
-        self.children.append(child_node)
-
-    def traverse(self):
-        yield self
-        for child in self.children:
-            yield from child.traverse()
 
     def escape(self, string, truncate_length=140):
         raw = repr(string)
@@ -393,18 +380,4 @@ def main2():
     counter.add_object(d4)
 
     # tree = counter.tree()
-    print(counter.html())
-
-
-def main(args=None):
-    if args is None:
-        args = sys.argv[1:]
-
-    filename = args[0]
-
-    counter = TripleCounter()
-    with open(filename) as infile:
-        for line in infile:
-            counter.add_object(json.loads(line))
-
     print(counter.html())
