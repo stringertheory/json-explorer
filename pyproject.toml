@@ -10,6 +10,9 @@ packages = [
   {include = "json_explorer"}
 ]
 
+[tool.poetry.scripts]
+greet = "json_explorer.explore:main"
+
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
 

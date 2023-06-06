@@ -1,6 +1,8 @@
 import collections
 import html
 import json
+import pathlib
+import sys
 
 INDEX = object()
 INDEX_STRING = "[*]"
@@ -14,6 +16,9 @@ TYPE_TRANSLATE = {
     "str": "string",
     "bool": "boolean",
 }
+THIS_DIR = pathlib.Path(__file__).parent.resolve()
+CSS_FILENAME = THIS_DIR / "style.css"
+TEMPLATE_FILENAME = THIS_DIR / "template.html"
 
 
 def oxford_join(items, pluralize=False):
@@ -80,14 +85,18 @@ class TripleCounter(dict):
         return root
 
     def add_object(self, d):
-        for keys in iter_object(d):
+        for keys in iter_object(d, []):
             self.increment(keys, 1)
 
     def html(self):
-        with open("template.html") as infile:
+        with open(TEMPLATE_FILENAME) as infile:
             html = infile.read()
 
+        with open(CSS_FILENAME) as infile:
+            css = infile.read()
+
         tree = self.tree()
+        html = html.replace("{{style}}", css)
         html = html.replace("{{tree}}", tree.html())
         html = html.replace("{{details}}", tree.details_html())
 
@@ -333,7 +342,7 @@ class Node(dict):
         return html
 
 
-def main():
+def main2():
     d1 = {
         "a": 1,
         "b": {"c": [11, 22], "d": [1, 2, 9], "e": {"f": "a", "g": True}},
@@ -387,10 +396,11 @@ def main():
     print(counter.html())
 
 
-def main2():
-    import sys
+def main(args=None):
+    if args is None:
+        args = sys.argv[1:]
 
-    filename = sys.argv[1]
+    filename = args[0]
 
     counter = TripleCounter()
     with open(filename) as infile:
@@ -398,7 +408,3 @@ def main2():
             counter.add_object(json.loads(line))
 
     print(counter.html())
-
-
-if __name__ == "__main__":
-    main2()
