@@ -29,6 +29,20 @@ def oxford_join(items, pluralize=False):
     return "{}, or {}".format(", ".join(items[:-1]), items[-1])
 
 
+class Counter(collections.Counter):
+    """The 'total' method is only available on a collections.Counter
+    in python >= 3.10, so add the method to be compatible with earlier
+    versions.
+
+    """
+
+    def total(self):
+        try:
+            return super().total()
+        except AttributeError:
+            return sum(self.values())
+
+
 class TripleCounter(dict):
     def increment(self, keys, amount):
         try:
@@ -40,13 +54,13 @@ class TripleCounter(dict):
         if a not in self:
             self[a] = {}
         if b not in self[a]:
-            self[a][b] = collections.Counter()
+            self[a][b] = Counter()
         self[a][b][c] += amount
 
     def tree(self):
         result = {}
         for a, sub_dict in self.items():
-            sub_counter = collections.Counter()
+            sub_counter = Counter()
             for b, c_counter in sub_dict.items():
                 sub_counter[b] += c_counter.total()
 

@@ -14,12 +14,11 @@ packages = [
 greet = "json_explorer.explore:main"
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0"
+python = ">=3.7,<4.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.0"
 pytest-cov = "^4.0.0"
-deptry = "^0.6.4"
 pre-commit = "^2.20.0"
 tox = "^3.25.1"
 beautifulsoup4 = "^4.12.2"
