@@ -38,7 +38,7 @@ For more details, see the [full
 documentation](https://stringertheory.github.io/json-explorer/>).
 
 
-### Other tools to help with 
+### Other tools to help with JSON data
 
 This tool is intended for quick and dirty exploration of JSONs. If
 that's not what you need, there are a *lot* of great resources for
