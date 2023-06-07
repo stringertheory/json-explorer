@@ -11,7 +11,7 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-greet = "json_explorer.explore:main"
+json-explorer = "json_explorer.cli:main"
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0"
