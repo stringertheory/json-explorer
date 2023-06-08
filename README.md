@@ -35,7 +35,7 @@ From there, you might use `jq` or `jmespath` to write something to
 more read the data that you're interested in using.
 
 For more details, see the [full
-documentation](https://stringertheory.github.io/json-explorer/>).
+documentation](https://stringertheory.github.io/json-explorer/).
 
 
 ### Other tools to help with JSON data
