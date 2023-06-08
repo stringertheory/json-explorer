@@ -155,7 +155,11 @@ class Node(dict):
             first = raw[: truncate_length // 2]
             second = raw[-(truncate_length // 2) :]
             length = len(raw) - len(first) - len(second)
-            return html.escape(first) + f'<span class="truncated" data-length="{length}"></span>' + html.escape(second)
+            return (
+                html.escape(first)
+                + f'<span class="truncated" data-length="{length}"></span>'
+                + html.escape(second)
+            )
         else:
             return html.escape(raw)
 
@@ -172,7 +176,12 @@ class Node(dict):
         elif len(counter) <= 5:
             return (
                 f"<p>{value_or_length} is "
-                + oxford_join([f"{self.escape(v)} {self.format_count(c)}" for v, c in counter.most_common()])
+                + oxford_join(
+                    [
+                        f"{self.escape(v)} {self.format_count(c)}"
+                        for v, c in counter.most_common()
+                    ]
+                )
                 + "</p>"
             )
         else:
@@ -205,7 +214,11 @@ class Node(dict):
             if value_type == "NoneType":
                 inside = f"{count:,}"
             elif value_type == "bool":
-                inside = f"{count:,}, always {values[0][0]!r}" if n_unique == 1 else f"{count:,}"
+                inside = (
+                    f"{count:,}, always {values[0][0]!r}"
+                    if n_unique == 1
+                    else f"{count:,}"
+                )
             elif value_type == "int" or value_type == "number":
                 if n_unique == 1:
                     inside = f"{count:,}, always {values[0][0]!r}"
@@ -221,11 +234,16 @@ class Node(dict):
                     if n_chars <= MAX_LENGTH_TO_SHOW:
                         inside = f"{count:,}, always {values[0][0]!r}"
                     else:
-                        inside = f"{count:,}, {n_unique:,} unique {n_chars:,} characters"
+                        inside = (
+                            f"{count:,}, {n_unique:,} unique"
+                            f" {n_chars:,} characters"
+                        )
                 elif n_unique <= 3:
                     combined = "".join(k for k, v in values)
                     if len(combined) <= MAX_LENGTH_TO_SHOW:
-                        values_string = oxford_join([f"{k!r}" for k, v in values])
+                        values_string = oxford_join(
+                            [f"{k!r}" for k, v in values]
+                        )
                         inside = f"{count:,}, either {values_string}"
                     else:
                         inside = f"{count:,}, {n_unique:,} unique"
@@ -240,7 +258,10 @@ class Node(dict):
                     values_string = oxford_join([f"{k:,}" for k, v in values])
                     inside = f"{count:,}, length either {values_string}"
                 else:
-                    inside = f"{count:,}, length between {min(counter):,} and {max(counter):,}"
+                    inside = (
+                        f"{count:,}, length between {min(counter):,} and"
+                        f" {max(counter):,}"
+                    )
             elif value_type == "dict":
                 if n_unique == 1:
                     inside = f"{count:,}, always {values[0][0]:,} properties"
@@ -248,7 +269,10 @@ class Node(dict):
                     values_string = oxford_join([f"{k:,}" for k, v in values])
                     inside = f"{count:,}, either {values_string} properties"
                 else:
-                    inside = f"{count:,}, between {min(counter):,} and {max(counter):,} properties"
+                    inside = (
+                        f"{count:,}, between {min(counter):,} and"
+                        f" {max(counter):,} properties"
+                    )
             else:
                 raise ValueError(f"unknown type {value_type!r}")
         return outside.format(inside)
@@ -263,7 +287,9 @@ class Node(dict):
 
         html = "<div>"
         for type_, counter in self["value_or_length_counter"].items():
-            html += f"<h3>{TYPE_TRANSLATE[type_]} {self.format_count(counter.total())}</h3>"
+            html += (
+                f"<h3>{TYPE_TRANSLATE[type_]} {self.format_count(counter.total())}</h3>"
+            )
             html += self._counter_summary_html(type_, counter)
         html += "</div>"
         return html
